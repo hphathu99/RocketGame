@@ -3,51 +3,34 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class GameCanvas extends JPanel {
-    BufferedImage starImage;
-    BufferedImage enemyImage;
-    BufferedImage playerImage;
 
     //BackBuffered
     BufferedImage backBuffered;
     Graphics graphics;
 
+    List<Star> stars;
+    int countStar = 0;
+
+    Enemy enemy;
+
+    Player player;
+
     public ArrayList<Integer> listXStar = new ArrayList<Integer>();
     public ArrayList<Integer> listYStar = new ArrayList<Integer>();
     public ArrayList<Integer> ranStarSpeed = new ArrayList<Integer>();
-    public int positionXEnemy = 500;
-    public int positionYEnemy = 200;
-    public int positionXPlayer = 500;
-    public int positionYPlayer = 300;
+
+    private Random random = new Random();
 
     public GameCanvas(){
         this.setSize(1024, 600);
 
-        this.backBuffered = new BufferedImage(1024, 600, BufferedImage.TYPE_4BYTE_ABGR);
-        this.graphics = this.backBuffered.getGraphics();
-
-        try {
-            this.starImage = ImageIO.read(new File("resources/images/star.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            this.enemyImage = ImageIO.read(new File("resources/images/circle.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            this.playerImage = ImageIO.read(new File("resources/images/circle.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        this.setupBackBuffered();
+        this.setupCharacter();
         this.setVisible(true);
     }
 
@@ -68,11 +51,45 @@ public class GameCanvas extends JPanel {
     public void renderAll() {
         graphics.setColor(Color.BLACK);
         graphics.fillRect(0, 0, 1024, 600);
-        for (int i = 0; i < 10; i++){
-            graphics.drawImage(this.starImage, listXStar.get(i), listYStar.get(i), 5, 5, null);
-        }
-        graphics.drawImage(this.enemyImage, this.positionXEnemy, this.positionYEnemy, 20, 20, null);
-        graphics.drawImage(this.playerImage, this.positionXPlayer, this.positionYPlayer, 32, 32, null);
+        this.stars.forEach(star -> star.render(graphics));
+        this.enemy.render(this.graphics);
+        this.player.render(this.graphics);
         this.repaint();
+    }
+
+    public void runAll(){
+        this.createStar();
+        this.enemy.run(player);
+        this.stars.forEach(star -> star.run());
+    }
+
+    private BufferedImage loadImage(String path){
+        try {
+            return ImageIO.read(new File(path));
+        } catch (Exception e){
+            return null;
+        }
+    }
+
+    private void setupBackBuffered (){
+        this.backBuffered = new BufferedImage(1024, 600, BufferedImage.TYPE_4BYTE_ABGR);
+        this.graphics = this.backBuffered.getGraphics();
+    }
+
+    private void setupCharacter(){
+        this.stars = new ArrayList<>();
+        this.enemy = new Enemy(300, 200, this.loadImage("resources/images/circle.png"), 3, 3);
+        this.player = new Player(500, 200, this. loadImage("resources/images/circle.png"), 5, 0 );
+    }
+
+    private void createStar(){
+        if (this.countStar == 50) {
+            Star star = new Star(1024, this.random.nextInt(600), this.loadImage("resources/images/star.png"), -this.random.nextInt(5) + 1, 0);
+            this.stars.add(star);
+            this.countStar = 0;
+        }
+        else{
+            this.countStar++;
+        }
     }
 }
