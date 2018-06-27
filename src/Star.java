@@ -4,26 +4,35 @@ import java.util.Random;
 
 public class Star {
 
-    public int x;
-    public int y;
-    public BufferedImage image;
-    public int velocityX;
-    public int velocityY;
+//    public int x;
+//    public int y;
+//    public BufferedImage image;
+//    public int velX;
+//    public int velY;
+//
+//    public Star(int x, int y, BufferedImage image, int velX, int velY) {
+//        this.x = x;
+//        this.y = y;
+//        this.image = image;
+//        this.velX = velX;
+//        this.velY = velY;
+//    }
 
-    public Star(int x, int y, BufferedImage image, int velocityX, int velocityY) {
-        this.x = x;
-        this.y = y;
+    public Vector2D position;
+    public BufferedImage image;
+    public Vector2D velocity;
+
+    public Star() {
+        this.position = new Vector2D();
         this.image = image;
-        this.velocityX = velocityX;
-        this.velocityY = velocityY;
+        this.velocity = new Vector2D();
     }
 
     public void run(){
-        this.x += this.velocityX;
-        this.y += this.velocityY;
+        this.position.addUp(this.velocity);
     }
 
     public void render (Graphics g){
-        g.drawImage(this.image, this.x, this.y, 5, 5, null);
+        g.drawImage(this.image, (int) this.position.x, (int) this.position.y, 5, 5, null);
     }
 }

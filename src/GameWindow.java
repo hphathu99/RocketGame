@@ -45,23 +45,15 @@ public class GameWindow extends JFrame {
             public void keyPressed(KeyEvent e) {
                 Random rand = new Random();
                 if(e.getKeyCode() == KeyEvent.VK_LEFT){
-                    if(gameCanvas.player.x < 10){
-                        ranPlayerPosY = rand.nextInt(570);
-                        gameCanvas.player.y =  ranPlayerPosY;
-                        gameCanvas.player.x = 1020;
-                    } else {
-                        gameCanvas.player.x -= 5;
-                    }
+                    gameCanvas.player.angle -= 5.0;
                 }
                 if(e.getKeyCode() == KeyEvent.VK_RIGHT){
-                    if(gameCanvas.player.x > 980){
-                        ranPlayerPosY = rand.nextInt(570);
-                        gameCanvas.player.x = 0;
-                        gameCanvas.player.y = ranPlayerPosY;
-                    } else {
-                        gameCanvas.player.x += 5;
-                    }
+                    gameCanvas.player.angle += 5.0;
                 }
+
+                gameCanvas.player.velocity.set(
+                        (new Vector2D(3.5f, 0.0f).rotate(gameCanvas.player.angle))
+                );
             }
 
             @Override
