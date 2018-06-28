@@ -18,24 +18,24 @@ public class Enemy {
 
     public void run(){
         this.position.addUp(this.velocity);
-        this.createBullet(this);
-        list.forEach(bullet -> bullet.run());
+//        this.createBullet(this);
+//        list.forEach(bullet -> bullet.run());
     }
 
-    public void createBullet(Enemy enemy){
-        if (this.countBullet == 10) {
-            for(int i = 0; i < 10; i++){
-                Bullet bullet = new Bullet();
-                bullet.position.set(enemy.position);
-                bullet.velocity.set(new Vector2D(3.5f,0).rotate(i*60));
-                this.list.add(bullet);
-            }
-            this.countBullet = 0;
-        }
-        else{
-            this.countBullet++;
-        }
-    }
+//    public void createBullet(Enemy enemy){
+//        if (this.countBullet == 10) {
+//            for(int i = 0; i < 10; i++){
+//                Bullet bullet = new Bullet();
+//                bullet.position.set(enemy.position);
+//                bullet.velocity.set(new Vector2D(3.5f,0).rotate(i*60));
+//                this.list.add(bullet);
+//            }
+//            this.countBullet = 0;
+//        }
+//        else{
+//            this.countBullet++;
+//        }
+//    }
 
     public void render(Graphics g){
         g.drawImage(this.image, (int)this.position.x,(int) this.position.y, 20, 20, null);

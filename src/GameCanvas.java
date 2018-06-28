@@ -13,8 +13,12 @@ public class GameCanvas extends JPanel {
     Graphics graphics;
 
     int countStar = 0;
+    int countBullet1 = 0;
+    int countBullet2 = 0;
 
     List<Star> stars;
+    List<Bullet> bulletsEnemy;
+    List<Bullet> bulletsPlayer;
 
     Background background;
 
@@ -38,6 +42,8 @@ public class GameCanvas extends JPanel {
     public void renderAll() {
         this.background.render(this.graphics);
         this.stars.forEach(star -> star.render(graphics));
+        this.bulletsEnemy.forEach(bullet -> bullet.render(graphics));
+        this.bulletsPlayer.forEach(bullet -> bullet.render(graphics));
         this.player.render(this.graphics);
         this.enemy.render(this.graphics);
         this.repaint();
@@ -46,7 +52,10 @@ public class GameCanvas extends JPanel {
     public void runAll(){
         this.createStar();
         this.stars.forEach(star -> star.run());
+        this.bulletsEnemy.forEach(bullet -> bullet.run());
+        this.bulletsPlayer.forEach(bullet -> bullet.run());
         this.runEnemy();
+        createBulletPlayer(this.player);
         this.player.run();
     }
 
@@ -66,6 +75,8 @@ public class GameCanvas extends JPanel {
     private void setupCharacter(){
         this.background = new Background();
         this.stars = new ArrayList<>();
+        this.bulletsEnemy = new ArrayList<>();
+        this.bulletsPlayer = new ArrayList<>();
         this.setupPlayer();
         this.setupEnemy();
     }
@@ -93,6 +104,36 @@ public class GameCanvas extends JPanel {
         }
     }
 
+    public void createBulletEnemy(Enemy enemy){
+        if (this.countBullet1 == 10) {
+
+            Bullet bullet = new Bullet();
+            bullet.position.set(enemy.position);
+            bullet.velocity.set(new Vector2D(3.5f,0).rotate(270));
+            bullet.image = loadImage("resources/images/circle.png");
+            this.bulletsEnemy.add(bullet);
+            this.countBullet1 = 0;
+        }
+        else{
+            this.countBullet1++;
+        }
+    }
+
+    public void createBulletPlayer(Player player){
+        if (this.countBullet2 == 10) {
+
+            Bullet bullet = new Bullet();
+            bullet.position.set(player.position);
+            bullet.velocity.set(new Vector2D(5f,0).rotate(player.angle));
+            bullet.image = loadImage("resources/images/circle.png");
+            this.bulletsPlayer.add(bullet);
+            this.countBullet2 = 0;
+        }
+        else{
+            this.countBullet2++;
+        }
+    }
+
     private void runEnemy(){
         Vector2D velocity = this.player.position
                 .subtract(this.enemy.position)
@@ -100,6 +141,7 @@ public class GameCanvas extends JPanel {
                 .multiply(1.5f);
         this.enemy.velocity.set(velocity);
         this.enemy.run();
+        createBulletEnemy(this.enemy);
     }
 
 }

@@ -24,7 +24,6 @@ public class Star {
 
     public Star() {
         this.position = new Vector2D();
-        this.image = image;
         this.velocity = new Vector2D();
     }
 

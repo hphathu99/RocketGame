@@ -11,16 +11,16 @@ public class Bullet {
     public Bullet(){
         this.position = new Vector2D();
         this.velocity = new Vector2D();
-        this.loadImage("resources/images/circle.png");
+//        this.loadImage("resources/images/circle.png");
     }
 
-    private BufferedImage loadImage(String path){
-        try {
-            return ImageIO.read(new File(path));
-        } catch (Exception e){
-            return null;
-        }
-    }
+//    private BufferedImage loadImage(String path){
+//        try {
+//            return ImageIO.read(new File(path));
+//        } catch (Exception e){
+//            return null;
+//        }
+//    }
 
     public void run(){
         this.position.addUp(this.velocity);
