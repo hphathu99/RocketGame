@@ -1,8 +1,11 @@
 import java.awt.*;
 
-public class Background {
+public class Background extends GameObject{
+
+    public Background(){
+        this.renderer = new BackgroundRenderer(Color.BLACK, 1024, 600);
+    }
     public void render(Graphics g){
-        g.setColor(Color.BLACK);
-        g.fillRect(0, 0, 1024, 600);
+        super.render(g);
     }
 }

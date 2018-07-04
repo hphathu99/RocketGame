@@ -16,13 +16,15 @@ public class GameCanvas extends JPanel {
     int countBullet1 = 0;
     int countBullet2 = 0;
 
-    List<Star> stars;
-    List<Bullet> bulletsEnemy;
-    List<Bullet> bulletsPlayer;
+    CreateStar createStar = new CreateStar();
+//    List<Star> stars;
+//    List<BulletEnemy> bulletsEnemy;
+//    List<BulletEnemy> bulletsPlayer;
 
     Background background;
 
     public Player player = new Player();
+    public EnemyPower enemyPower = new EnemyPower();
     public Enemy enemy = new Enemy();
 
     private Random random = new Random();
@@ -41,21 +43,19 @@ public class GameCanvas extends JPanel {
 
     public void renderAll() {
         this.background.render(this.graphics);
-        this.stars.forEach(star -> star.render(graphics));
-        this.bulletsEnemy.forEach(bullet -> bullet.render(graphics));
-        this.bulletsPlayer.forEach(bullet -> bullet.render(graphics));
+        this.createStar.stars.forEach(star -> star.render(graphics));
         this.player.render(this.graphics);
+        this.enemyPower.render(this.graphics);
         this.enemy.render(this.graphics);
         this.repaint();
     }
 
     public void runAll(){
-        this.createStar();
-        this.stars.forEach(star -> star.run());
-        this.bulletsEnemy.forEach(bullet -> bullet.run());
-        this.bulletsPlayer.forEach(bullet -> bullet.run());
+        createStar.createStar();
+//        this.createStar();
+        this.createStar.stars.forEach(star -> star.run());
         this.runEnemy();
-        createBulletPlayer(this.player);
+        this.runEnemyPower();
         this.player.run();
     }
 
@@ -74,9 +74,7 @@ public class GameCanvas extends JPanel {
 
     private void setupCharacter(){
         this.background = new Background();
-        this.stars = new ArrayList<>();
-        this.bulletsEnemy = new ArrayList<>();
-        this.bulletsPlayer = new ArrayList<>();
+//        this.stars = new ArrayList<>();
         this.setupPlayer();
         this.setupEnemy();
     }
@@ -87,52 +85,21 @@ public class GameCanvas extends JPanel {
 
     private void setupEnemy(){
         this.enemy.position.set(800, 400);
-        this.enemy.image = this.loadImage("resources/images/circle.png");
+        this.enemyPower.position.set(600, 300);
     }
-
-    private void createStar(){
-        if (this.countStar == 100) {
-            Star star = new Star();
-            star.position.set(1024, random.nextInt(600));
-            star.image = loadImage("resources/images/circle.png");
-            star.velocity.set(this.random.nextInt(5) + 1, 0);
-            this.stars.add(star);
-            this.countStar = 0;
-        }
-        else{
-            this.countStar++;
-        }
-    }
-
-    public void createBulletEnemy(Enemy enemy){
-        if (this.countBullet1 == 10) {
-
-            Bullet bullet = new Bullet();
-            bullet.position.set(enemy.position);
-            bullet.velocity.set(new Vector2D(3.5f,0).rotate(270));
-            bullet.image = loadImage("resources/images/circle.png");
-            this.bulletsEnemy.add(bullet);
-            this.countBullet1 = 0;
-        }
-        else{
-            this.countBullet1++;
-        }
-    }
-
-    public void createBulletPlayer(Player player){
-        if (this.countBullet2 == 10) {
-
-            Bullet bullet = new Bullet();
-            bullet.position.set(player.position);
-            bullet.velocity.set(new Vector2D(5f,0).rotate(player.angle));
-            bullet.image = loadImage("resources/images/circle.png");
-            this.bulletsPlayer.add(bullet);
-            this.countBullet2 = 0;
-        }
-        else{
-            this.countBullet2++;
-        }
-    }
+//
+//    private void createStar(){
+//        if (this.countStar == 30) {
+//            Star star = new Star();
+//            star.position.set(1024, random.nextInt(600));
+//            star.velocity.set(-this.random.nextInt(3) + 1, 0);
+//            this.stars.add(star);
+//            this.countStar = 0;
+//        }
+//        else{
+//            this.countStar++;
+//        }
+//    }
 
     private void runEnemy(){
         Vector2D velocity = this.player.position
@@ -141,7 +108,11 @@ public class GameCanvas extends JPanel {
                 .multiply(1.5f);
         this.enemy.velocity.set(velocity);
         this.enemy.run();
-        createBulletEnemy(this.enemy);
+    }
+
+    private void runEnemyPower(){
+        this.enemyPower.velocity.set(1.5f,0);
+        this.enemyPower.run();
     }
 
 }

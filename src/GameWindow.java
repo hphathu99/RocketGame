@@ -8,7 +8,6 @@ import java.util.Random;
 public class GameWindow extends JFrame {
     GameCanvas gameCanvas;
     long lastTime = 0;
-    public int ranPlayerPosY = 0;
 
     public GameWindow(){
         this.setSize(1024,600);
@@ -43,7 +42,6 @@ public class GameWindow extends JFrame {
 
             @Override
             public void keyPressed(KeyEvent e) {
-                Random rand = new Random();
                 if(e.getKeyCode() == KeyEvent.VK_LEFT){
                     gameCanvas.player.angle -= 5.0;
                 }
