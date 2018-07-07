@@ -8,6 +8,7 @@ import java.util.Random;
 public class GameWindow extends JFrame {
     GameCanvas gameCanvas;
     long lastTime = 0;
+    Listener keyListener;
 
     public GameWindow(){
         this.setSize(1024,600);
@@ -15,6 +16,7 @@ public class GameWindow extends JFrame {
         this.add(this.gameCanvas);
         this.event();
         this.setVisible(true);
+        this.keyListener = new Listener();
     }
 
     public void gameLoop(){
@@ -35,29 +37,30 @@ public class GameWindow extends JFrame {
     }
 
     private void keyboardEvent(){
-        this.addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if(e.getKeyCode() == KeyEvent.VK_LEFT){
-                    gameCanvas.player.angle -= 5.0;
-                }
-                if(e.getKeyCode() == KeyEvent.VK_RIGHT){
-                    gameCanvas.player.angle += 5.0;
-                }
-
-                gameCanvas.player.velocity.set(
-                        (new Vector2D(3.5f, 0.0f).rotate(gameCanvas.player.angle))
-                );
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-        });
+//        this.addKeyListener(new KeyListener() {
+//            @Override
+//            public void keyTyped(KeyEvent e) {
+//            }
+//
+//            @Override
+//            public void keyPressed(KeyEvent e) {
+//                if(e.getKeyCode() == KeyEvent.VK_LEFT){
+//                    gameCanvas.player.angle -= 5.0;
+//                }
+//                if(e.getKeyCode() == KeyEvent.VK_RIGHT){
+//                    gameCanvas.player.angle += 5.0;
+//                }
+//
+//                gameCanvas.player.velocity.set(
+//                        (new Vector2D(3.5f, 0.0f).rotate(gameCanvas.player.angle))
+//                );
+//            }
+//
+//            @Override
+//            public void keyReleased(KeyEvent e) {
+//            }
+//        });
+        this.addKeyListener(keyListener);
     }
 
     private void windowEvent(){

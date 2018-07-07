@@ -1,26 +1,24 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class EnemyBasicShoot implements EnemyShoot {
-    public List<BulletEnemy> bulletEnemies;
-    private int count = 0;
+    private FrameCounter frameCounter;
 
     public EnemyBasicShoot(){
-        this.bulletEnemies = new ArrayList<>();
+        this.frameCounter = new FrameCounter(30);
     }
 
     @Override
     public void run(Enemy enemy) {
-        if(this.count == 30){
+        if(this.frameCounter.run()){
             BulletEnemy bulletEnemy = new BulletEnemy();
             bulletEnemy.position.set(enemy.position);
             bulletEnemy.velocity.set(new Vector2D(3.0f, 0.0f)).rotate(270);
-            this.bulletEnemies.add(bulletEnemy);
-            this.count = 0;
-        } else {
-            this.count += 1;
+            GameObjectManager.instance.add(bulletEnemy);
+            frameCounter.reset();
         }
-        bulletEnemies.forEach(bulletEnemy -> bulletEnemy.run());
+
     }
 
     @Override

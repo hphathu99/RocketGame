@@ -16,12 +16,20 @@ public class Enemy extends GameObject{
     public void run(){
         super.run();
         this.position.addUp(this.velocity);
-        enemyShoot.run(this);
+        Player player = GameObjectManager.instance.findPlayer();
+        if(player != null){
+            Vector2D velocity = player.position
+                    .subtract(this.position)
+                    .normalize()
+                    .multiply(1.5f);
+            this.velocity.set(velocity);
+        }
+        this.enemyShoot.run(this);
     }
 
-    public void render(Graphics g){
-        super.render(g);
-        ((EnemyBasicShoot) this.enemyShoot).bulletEnemies.forEach(bulletEnemy -> bulletEnemy.render(g));
-    }
+//    public void render(Graphics g){
+//        super.render(g);
+////        ((EnemyBasicShoot) this.enemyShoot).bulletEnemies.forEach(bulletEnemy -> bulletEnemy.render(g));
+//    }
 
 }

@@ -19,27 +19,9 @@ public class EnemyPower extends GameObject{
     public void run(){
         super.run();
         this.position.addUp(this.velocity);
+        this.velocity.set(1.5f,0);
+        this.enemyShoot.run(this);
         this.backToScreen();
-        enemyShoot.run(this);
-//        if(this.count == 30){
-//            for(double angle = 0.0; angle < 360.0; angle += 360.0/10.0){
-//                BulletEnemy bulletEnemy = new BulletEnemy();
-//                bulletEnemy.position.set(this.position);
-//                bulletEnemy.velocity.set(
-//                        (new Vector2D(3.0f, 0.0f)).rotate(angle)
-//                );
-//                this.bulletEnemies.add(bulletEnemy);
-//            }
-//            this.count = 0;
-//        } else {
-//            this.count += 1;
-//        }
-//        bulletEnemies.forEach(bulletEnemy -> bulletEnemy.run());
-    }
-
-    public void render(Graphics g){
-        super.render(g);
-        ((EnemyPowerShoot) enemyShoot).bulletEnemies.forEach(bulletEnemy -> bulletEnemy.render(g));
     }
 
     public void backToScreen(){
