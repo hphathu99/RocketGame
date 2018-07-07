@@ -8,7 +8,7 @@ import java.util.Random;
 public class GameWindow extends JFrame {
     GameCanvas gameCanvas;
     long lastTime = 0;
-    Listener keyListener;
+
 
     public GameWindow(){
         this.setSize(1024,600);
@@ -16,7 +16,6 @@ public class GameWindow extends JFrame {
         this.add(this.gameCanvas);
         this.event();
         this.setVisible(true);
-        this.keyListener = new Listener();
     }
 
     public void gameLoop(){
@@ -60,7 +59,7 @@ public class GameWindow extends JFrame {
 //            public void keyReleased(KeyEvent e) {
 //            }
 //        });
-        this.addKeyListener(keyListener);
+        this.addKeyListener(Listener.instance);
     }
 
     private void windowEvent(){

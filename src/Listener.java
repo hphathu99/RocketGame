@@ -2,12 +2,13 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class Listener implements KeyListener {
-    public boolean left;
-    public boolean right;
 
-    public Listener(){
-        this.left = false;
-        this.right = false;
+    public static Listener instance = new Listener();
+    public boolean left = false;
+    public boolean right = false;
+
+    private Listener(){
+
     }
 
     @Override
@@ -19,9 +20,11 @@ public class Listener implements KeyListener {
     public void keyPressed(KeyEvent e) {
         if(e.getKeyCode() == KeyEvent.VK_LEFT){
             this.left = true;
+//            System.out.println(this.left);
         }
         if(e.getKeyCode() == KeyEvent.VK_RIGHT){
            this.right = true;
+//            System.out.println(this.right);
         }
 
     }
