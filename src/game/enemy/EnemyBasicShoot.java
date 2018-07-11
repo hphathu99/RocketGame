@@ -1,6 +1,8 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+package game.enemy;
+
+import base.FrameCounter;
+import base.GameObjectManager;
+import base.Vector2D;
 
 public class EnemyBasicShoot implements EnemyShoot {
     private FrameCounter frameCounter;

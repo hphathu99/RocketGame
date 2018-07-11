@@ -1,3 +1,7 @@
+package renderer;
+
+import base.Vector2D;
+
 import java.awt.*;
 import java.util.Arrays;
 import java.util.List;
@@ -21,7 +25,7 @@ public class PolygonRenderer implements Renderer {
 
         /*
         Tinh toa do trong tam tam giac
-        Vector2D center = new Vector2D();
+        base.Vector2D center = new base.Vector2D();
         this.vertices.forEach(vertex -> center.addUp(vertex)):
         center.multiply(1.0f / (float) this.vertices.size());
          */

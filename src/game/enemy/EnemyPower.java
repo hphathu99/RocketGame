@@ -1,19 +1,25 @@
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.util.List;
-import java.util.ArrayList;
+package game.enemy;
+
+import base.GameObject;
+import base.Vector2D;
+import physics.BoxCollider;
+import renderer.ImageRenderer;
+
 import java.util.Random;
 
-public class EnemyPower extends GameObject{
+public class EnemyPower extends GameObject {
     public Vector2D velocity;
     private EnemyShoot enemyShoot;
     private Random random = new Random();
+    public BoxCollider boxCollider;
+
 
     public EnemyPower() {
         this.position = new Vector2D();
         this.velocity = new Vector2D();
         this.enemyShoot = new EnemyPowerShoot();
         this.renderer = new ImageRenderer("resources/images/circle.png", 20, 20);
+        this.boxCollider = new BoxCollider(20, 20);
     }
 
     public void run(){

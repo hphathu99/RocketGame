@@ -1,12 +1,14 @@
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
+package game.star;
 
-public class BulletEnemy extends GameObject {
+import base.GameObject;
+import base.Vector2D;
+import renderer.ImageRenderer;
+
+public class Star extends GameObject {
+
     public Vector2D velocity;
 
-    public BulletEnemy(){
+    public Star() {
         this.velocity = new Vector2D();
         this.renderer = new ImageRenderer("resources/images/circle.png", 5, 5);
     }
@@ -16,5 +18,4 @@ public class BulletEnemy extends GameObject {
         super.run();
         this.position.addUp(this.velocity);
     }
-
 }
